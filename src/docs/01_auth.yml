@@ -1,0 +1,164 @@
+paths:
+  /auth/sign-up:
+    post:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/signUp"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+  /auth/sign-in:
+    post:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/signIn"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+  /auth/verify:
+    get:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: email
+          type: string
+        - in: query
+          name: token
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+  /auth/initiate-reset:
+    post:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/initiateReset"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+  /auth/verify-reset:
+    get:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: token
+          required: true
+          type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+  /auth/reset-password:
+    put:
+      tags:
+        - Authentication
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: request
+          required: true
+          schema:
+            $ref: "#/definitions/resetPassword"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server down
+
+definitions:
+  signIn:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+  signUp:
+    type: object
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+        required: true
+      phone:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+  initiateReset:
+    type: object
+    properties:
+      email:
+        type: string
+        required: true
+  resetPassword:
+    type: object
+    properties:
+      token:
+        type: string
+        required: true
+      password:
+        type: string
+      logOtherDevicesOut:
+        type: boolean
+        default: false
